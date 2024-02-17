@@ -44,21 +44,21 @@ Here is a brief overview of each file in the folder `src`:
 ```python
 # Core Code
 |- api.py			    # API for storing the experiments
-|- dataloader.py	# Load datasets for experiments
-|- evaluate.py		# Evaluate the results of the experiment
-|- prompt.py		  # Stores all the prompts involved in the experiment.
-|- utils.py			  # The management center of the agents.
-|- run_main.py		# Simulate a society of agents using different collaborative strategies to solve problems
-|- run_agent.py
-|- run_strategy.py  
+|- dataloader.py	    # Load datasets for experiments
+|- evaluate.py		    # Evaluate the results of the experiment
+|- prompt.py		    # Stores all the prompts involved in the experiment.
+|- utils.py			    # The management center of the agents.
+|- run_main.py		    # Simulate a society of agents using different collaborative strategies to solve problems (main experiment)
+|- run_agent.py         # Exploring the Impact of Agent Quantity
+|- run_strategy.py      # All agents can adopt different thinking patterns for collaboration
 
 # Other Code
-|- conformity_and_consistency.py
-|- run_main.sh
-|- run_agent.sh
-|- run_strategy.sh
-|- run_turn.sh
-|- draw
+|- run_main.sh          # Main experiment running script
+|- run_agent.sh         # The running script of the experiment on the number of agents
+|- run_strategy.sh      # The running script of the experiment on the strategies
+|- run_turn.sh          # The running script of the experiment on the number of collaboration rounds
+|- conformity_and_consistency.py    # Process and draw figures such as Figure 6 and Figure 7 in the paper
+|- draw                 # Include the drawing code for all the figures in the paper
     |- draw_10_agent.py
     |- draw_conformity
     |- ...
@@ -83,7 +83,7 @@ Here is a brief overview of each file in the folder `src`:
    }
    ```
 
-   Our coding framework offers compatibility with a variety of inference services across multiple platforms, such as Replicate, OpenAI, Dashscope, and Anyscale. Specifically, Dashscope facilitates the deployment of the Qwen model, whereas OpenAI provides support for the GPT model integration.
+   Our coding framework offers compatibility with a variety of inference services across multiple platforms, such as **Replicate**, **OpenAI**, **Dashscope**, and **Anyscale**. Specifically, **Dashscope** facilitates the deployment of the `Qwen` model, whereas **OpenAI** provides support for the `GPT` model integration.
 
 
 2. Execute the scripts `run_main.sh`, `run_agent.sh`, `run_turn.sh`, and `run_strategy.sh` housed in the `src` directory. These scripts are designed to initiate a variety of experiments: the main experiment (corresponding to Table 2 in the paper), variations in agent numbers (Figure 3 in the paper), differing collaboration round counts (Figure 4 in the paper), and trials involving alternative collaboration strategies (Figure 5 in the paper). You can adjust the parameters within the scripts to accommodate different experimental settings.
@@ -93,13 +93,13 @@ Here is a brief overview of each file in the folder `src`:
 
 3. Execute the `evaluate.py` in the `src` directory. 
 
-    For the main experiment results, you can execute the following command:
+    a. For the main experiment results, you can execute the following command:
     ```bash
     python evaluate.py main_table --experiment_type gpt-1106-main --dataset mmlu
     ```
     This code will be output in LaTeX code format. The argument `--experiment` should be the name of a folder. To replicate the results presented in the paper, after downloading and uncompressing it into the `src` root directory, rename the `upload` to `results`. At this point, the available options for the `--experiment` parameter are `gpt-1106-main`, `llama13-main`, `llama70-main`, `qwen-main`, and `mixtral-main`. The optional values for argument `--dataset` are `mmlu`, `math`, and `chess`.
 
-    For the siginificant test, you can execute the following commands:
+    b. For the siginificant test, you can execute the following commands:
     ```bash
     python evaluate.py anova --types main --dataset chess --experiment_type "['llama13-main','gpt-1106-main']"
     python evaluate.py anova --types turn --dataset chess  --experiment_type "['llama13-turn-4','llama70-turn-4']"
@@ -110,7 +110,7 @@ Here is a brief overview of each file in the folder `src`:
     ```
     You can change the `--dataset` and `--experiment_type` to get the original result (e.g., Table 6 in the paper).
 
-    We also provide code for drawing figures in the paper. For the vast majority of figures, the following code can be executed:
+    c. We also provide code for drawing figures in the paper. For the vast majority of figures, the following code can be executed:
     ```bash
     python evaluate.py draw --types distribute --experiment_type gpt-1106-main
     python evaluate.py draw --types agent --experiment_type llama13-main
@@ -123,7 +123,7 @@ Here is a brief overview of each file in the folder `src`:
     python evaluate.py draw --types word --experiment_type gpt-1106-main
     ```
 
-    It should be noted that in order to obtain the results of Figures 6 and 7, you need to execute the following code:
+    d. It should be noted that in order to obtain the results of Figures 6 and 7, you need to execute the following code:
     ```bash
     python conformity_and_consistency.py --experiment_type 'mixtral-main' --type 'consistent'
     python conformity_and_consistency.py --experiment_type 'mixtral-main' --type 'conformity'
